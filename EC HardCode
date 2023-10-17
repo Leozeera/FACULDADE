@@ -1,0 +1,53 @@
+;Programa hardcode 'Leonardo Luz Moises'
+;Introdução ao Assembly
+;Author: Luiz Angelo, FEAP
+;Version: Leonardo Luz Moises, curso Engenharia da computação
+
+SYS_EXIT    equ 1
+SYS_READ    equ 3
+SYS_WRITE   equ 4
+STIDIN      equ 0
+STDOUT      equ 1
+
+section .data   ;inicialização do programa
+    msg1 db 'A soma é: '
+    len equ $ - msg1
+
+section .bss      ;seleção que o numero recebe
+    res resb 1
+
+section .text
+    global _start
+
+_start:          ;iniciação dos valores
+   
+    mov eax, 3      ;recebe o valor 3
+    mov ebx, 4      ;recebe o valor 4
+
+     ;Soma entre os nomeros eax, ebx
+    add eax, ebx
+
+     ;Converter o resultado para caractere ASCII
+    add eax, '0'
+
+    ; Armazenar o resultado na variável res
+    mov [res], eax
+
+    ; Imprimir a mensagem
+    mov eax, 4      
+    mov ebx, 1      
+    mov ecx, msg1   
+    mov edx, len    
+    int 0x80
+
+    ; Imprimir o resultado na tela
+    mov eax, 4      
+    mov ebx, 1      
+    mov ecx, res    
+    mov edx, 1      
+    int 0x80
+
+    ; Sair do programa
+    mov eax, 1     
+    xor ebx, ebx
+    int 0x80
